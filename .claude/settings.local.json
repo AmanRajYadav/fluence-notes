@@ -3,7 +3,9 @@
     "allow": [
       "Bash(vercel:*)",
       "Bash(git remote add:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nMake app fully mobile responsive\n\n- Stack notes list and editor vertically on mobile, horizontally on desktop\n- Reduce button sizes and spacing on mobile screens\n- Hide email in header on small screens\n- Make all text sizes responsive (smaller on mobile)\n- Optimize touch targets for mobile\n- Use Tailwind breakpoints (md:) for responsive behavior\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []

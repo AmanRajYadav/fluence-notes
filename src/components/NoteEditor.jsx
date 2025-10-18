@@ -138,28 +138,28 @@ export default function NoteEditor({ selectedNote, onNoteSaved, onNewNote }) {
     <div className="bg-white h-full flex flex-col rounded-l-2xl shadow-sm">
       {/* Editor Header */}
       <div className="border-b border-peach-200 p-4">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex flex-col space-y-3 md:flex-row md:justify-between md:items-center md:space-y-0 mb-4">
           <div className="flex-1">
             <input
               type="text"
               placeholder="Note title..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full text-xl font-semibold bg-transparent border-none outline-none text-black placeholder-gray-500"
+              className="w-full text-lg md:text-xl font-semibold bg-transparent border-none outline-none text-black placeholder-gray-500"
             />
           </div>
-          <div className="flex items-center space-x-2 ml-4">
+          <div className="flex items-center space-x-1.5 md:space-x-2 md:ml-4">
             <button
               onClick={handleNewNote}
               disabled={loading}
-              className="px-4 py-2 bg-green-100 text-slate-700 rounded-full hover:bg-green-200 transition-colors disabled:opacity-50 shadow-sm"
+              className="px-2 py-1.5 md:px-4 md:py-2 bg-green-100 text-slate-700 rounded-full hover:bg-green-200 transition-colors disabled:opacity-50 shadow-sm text-xs md:text-sm whitespace-nowrap"
             >
               New Note
             </button>
             <button
               onClick={handleSave}
               disabled={loading || (!title.trim() && !content.trim())}
-              className="px-4 py-2 bg-peach-300 text-black rounded-full hover:bg-peach-400 transition-colors disabled:opacity-50 shadow-sm"
+              className="px-2 py-1.5 md:px-4 md:py-2 bg-peach-300 text-black rounded-full hover:bg-peach-400 transition-colors disabled:opacity-50 shadow-sm text-xs md:text-sm whitespace-nowrap"
             >
               {loading ? 'Saving...' : 'Save'}
             </button>
@@ -167,7 +167,7 @@ export default function NoteEditor({ selectedNote, onNoteSaved, onNewNote }) {
               <button
                 onClick={handleDelete}
                 disabled={loading}
-                className="px-4 py-2 bg-red-200 text-red-700 rounded-full hover:bg-red-300 transition-colors disabled:opacity-50 shadow-sm"
+                className="px-2 py-1.5 md:px-4 md:py-2 bg-red-200 text-red-700 rounded-full hover:bg-red-300 transition-colors disabled:opacity-50 shadow-sm text-xs md:text-sm whitespace-nowrap"
               >
                 Delete
               </button>
@@ -176,7 +176,7 @@ export default function NoteEditor({ selectedNote, onNoteSaved, onNewNote }) {
         </div>
 
         {/* Public/Private Toggle */}
-        <div className="flex items-center space-x-3 mt-3">
+        <div className="flex items-center space-x-2 md:space-x-3 mt-3">
           <label className="flex items-center cursor-pointer">
             <input
               type="checkbox"
@@ -185,7 +185,7 @@ export default function NoteEditor({ selectedNote, onNoteSaved, onNewNote }) {
               className="sr-only peer"
             />
             <div className="relative w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-peach-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-400"></div>
-            <span className="ml-3 text-sm font-medium text-slate-700">
+            <span className="ml-3 text-xs md:text-sm font-medium text-slate-700">
               {isPublic ? 'Public - Everyone can view' : 'Private - Only you can view'}
             </span>
           </label>
@@ -204,22 +204,22 @@ export default function NoteEditor({ selectedNote, onNoteSaved, onNewNote }) {
       </div>
 
       {/* Editor Footer */}
-      <div className="border-t border-peach-200 p-4">
-        <div className="flex justify-between items-center text-sm text-slate-500">
-          <div>
+      <div className="border-t border-peach-200 p-3 md:p-4">
+        <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:items-center md:space-y-0 text-xs md:text-sm text-slate-500">
+          <div className="text-center md:text-left">
             {selectedNote ? (
               <span>
                 Last saved: {new Date(selectedNote.created_at).toLocaleString()}
               </span>
             ) : (
-              <span>New note - changes will be saved automatically</span>
+              <span>New note</span>
             )}
           </div>
-          <div>
+          <div className="text-center md:text-right">
             {title.length + content.length} characters
           </div>
         </div>
-        <div className="text-center mt-3 text-xs text-slate-400">
+        <div className="text-center mt-2 md:mt-3 text-xs text-slate-400">
           Powered By Fluence
         </div>
       </div>

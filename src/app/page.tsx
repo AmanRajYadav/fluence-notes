@@ -25,19 +25,20 @@ export default function Home() {
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-green-50 to-peach-50">
       <Header />
-      
-      <div className="flex-1 flex overflow-hidden">
+
+      {/* Mobile: vertical stack, Desktop: horizontal layout */}
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
         {/* Sidebar - Notes List */}
-        <div className="w-80 flex-shrink-0">
-          <NotesList 
+        <div className="w-full md:w-80 md:flex-shrink-0 h-1/3 md:h-full overflow-y-auto md:overflow-visible">
+          <NotesList
             onSelectNote={handleSelectNote}
             selectedNoteId={selectedNote?.id}
           />
         </div>
-        
+
         {/* Main Content - Note Editor */}
-        <div className="flex-1">
-          <NoteEditor 
+        <div className="flex-1 overflow-y-auto md:overflow-visible">
+          <NoteEditor
             selectedNote={selectedNote}
             onNoteSaved={handleNoteSaved}
             onNewNote={handleNewNote}

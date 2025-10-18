@@ -102,30 +102,30 @@ export default function Header() {
               Fluence Notes
             </h1>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 md:space-x-4">
               {user ? (
-                <div className="flex items-center space-x-3">
-                  <div className="text-sm text-slate-600">
+                <div className="flex items-center space-x-2 md:space-x-3">
+                  <div className="hidden sm:block text-sm text-slate-600 truncate max-w-[120px] md:max-w-none">
                     {user.email}
                   </div>
                   <button
                     onClick={handleSignOut}
-                    className="bg-peach-300 hover:bg-peach-400 text-black px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-sm"
+                    className="bg-peach-300 hover:bg-peach-400 text-black px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium transition-colors shadow-sm"
                   >
                     Sign Out
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1.5 md:space-x-2">
                   <button
                     onClick={() => openAuthModal(false)}
-                    className="bg-green-200 hover:bg-green-300 text-slate-700 px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-sm"
+                    className="bg-green-200 hover:bg-green-300 text-slate-700 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium transition-colors shadow-sm"
                   >
                     Sign In
                   </button>
                   <button
                     onClick={() => openAuthModal(true)}
-                    className="bg-peach-300 hover:bg-peach-400 text-black px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-sm"
+                    className="bg-peach-300 hover:bg-peach-400 text-black px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium transition-colors shadow-sm"
                   >
                     Sign Up
                   </button>
