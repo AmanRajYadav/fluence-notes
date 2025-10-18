@@ -4,15 +4,16 @@ import { useState } from 'react'
 import Header from '../components/Header'
 import NotesList from '../components/NotesList'
 import NoteEditor from '../components/NoteEditor'
+import { Note } from '../types/note'
 
 export default function Home() {
-  const [selectedNote, setSelectedNote] = useState<any>(null)
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null)
 
-  const handleSelectNote = (note: any) => {
+  const handleSelectNote = (note: Note | null) => {
     setSelectedNote(note)
   }
 
-  const handleNoteSaved = (note: any) => {
+  const handleNoteSaved = (note: Note | null) => {
     // This will trigger a re-fetch in NotesList
     setSelectedNote(note)
   }

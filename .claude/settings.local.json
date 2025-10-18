@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(vercel:*)"
+      "Bash(vercel:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
