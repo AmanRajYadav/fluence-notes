@@ -47,10 +47,9 @@ export default function NotesList({ onSelectNote, selectedNoteId }) {
           event: '*',
           schema: 'public',
           table: 'notes',
-          filter: `user_id=eq.${user.id}`,
         },
         () => {
-          // Refetch notes when any change occurs
+          // Refetch notes when any change occurs (including public notes from others)
           fetchNotes(user.id)
         }
       )
@@ -64,10 +63,11 @@ export default function NotesList({ onSelectNote, selectedNoteId }) {
   const fetchNotes = async (userId) => {
     try {
       setLoading(true)
+      // Fetch user's own notes AND public notes from others
       const { data, error } = await supabase
         .from('notes')
         .select('*')
-        .eq('user_id', userId)
+        .or(`user_id.eq.${userId},is_public.eq.true`)
         .order('created_at', { ascending: false })
 
       if (error) throw error
@@ -177,6 +177,7 @@ export default function NotesList({ onSelectNote, selectedNoteId }) {
                     <NoteCard
                       key={note.id}
                       note={note}
+                      currentUserId={user?.id}
                       isSelected={selectedNoteId === note.id}
                       onSelect={() => onSelectNote(note)}
                       onDelete={() => handleDeleteNote(note.id)}
@@ -200,6 +201,7 @@ export default function NotesList({ onSelectNote, selectedNoteId }) {
                     <NoteCard
                       key={note.id}
                       note={note}
+                      currentUserId={user?.id}
                       isSelected={selectedNoteId === note.id}
                       onSelect={() => onSelectNote(note)}
                       onDelete={() => handleDeleteNote(note.id)}
@@ -216,17 +218,19 @@ export default function NotesList({ onSelectNote, selectedNoteId }) {
   )
 }
 
-function NoteCard({ note, isSelected, onSelect, onDelete, onTogglePin }) {
+function NoteCard({ note, currentUserId, isSelected, onSelect, onDelete, onTogglePin }) {
   const formatDate = (dateString) => {
     const date = new Date(dateString)
     const now = new Date()
     const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24))
-    
+
     if (diffInDays === 0) return 'Today'
     if (diffInDays === 1) return 'Yesterday'
     if (diffInDays < 7) return `${diffInDays} days ago`
     return date.toLocaleDateString()
   }
+
+  const isOwnNote = note.user_id === currentUserId
 
   // Different colors for public vs private notes
   const bgColor = note.is_public
@@ -256,30 +260,33 @@ function NoteCard({ note, isSelected, onSelect, onDelete, onTogglePin }) {
             </span>
           )}
         </div>
-        <div className="flex items-center space-x-1 ml-2">
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              onTogglePin()
-            }}
-            className={`p-1 rounded-full hover:bg-peach-100 transition-colors ${
-              note.pinned ? 'text-peach-500' : 'text-slate-400'
-            }`}
-            title={note.pinned ? 'Unpin note' : 'Pin note'}
-          >
-            📌
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              onDelete()
-            }}
-            className="p-1 rounded-full hover:bg-red-100 text-red-400 transition-colors"
-            title="Delete note"
-          >
-            🗑️
-          </button>
-        </div>
+        {/* Only show action buttons for user's own notes */}
+        {isOwnNote && (
+          <div className="flex items-center space-x-1 ml-2">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onTogglePin()
+              }}
+              className={`p-1 rounded-full hover:bg-peach-100 transition-colors ${
+                note.pinned ? 'text-peach-500' : 'text-slate-400'
+              }`}
+              title={note.pinned ? 'Unpin note' : 'Pin note'}
+            >
+              📌
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onDelete()
+              }}
+              className="p-1 rounded-full hover:bg-red-100 text-red-400 transition-colors"
+              title="Delete note"
+            >
+              🗑️
+            </button>
+          </div>
+        )}
       </div>
 
       <p className="text-sm text-gray-700 line-clamp-2 mb-2">
