@@ -7,7 +7,7 @@ create table if not exists notes (
   title text,
   content text,
   pinned boolean default false,
-  is_public boolean default false,
+  is_public boolean default true,
   created_at timestamptz default now()
 );
 

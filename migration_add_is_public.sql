@@ -1,8 +1,8 @@
 -- Migration to add is_public column to notes table
 -- Run this in your Supabase SQL Editor
 
--- Add is_public column (defaults to false for existing notes)
-ALTER TABLE notes ADD COLUMN IF NOT EXISTS is_public boolean DEFAULT false;
+-- Add is_public column (defaults to true for new notes)
+ALTER TABLE notes ADD COLUMN IF NOT EXISTS is_public boolean DEFAULT true;
 
 -- Drop the old select policy
 DROP POLICY IF EXISTS "Allow logged in select" ON notes;

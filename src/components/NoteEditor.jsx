@@ -8,7 +8,7 @@ export default function NoteEditor({ selectedNote, onNoteSaved, onNewNote }) {
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState(null)
-  const [isPublic, setIsPublic] = useState(false)
+  const [isPublic, setIsPublic] = useState(true)
 
   useEffect(() => {
     // Get initial session
@@ -30,11 +30,11 @@ export default function NoteEditor({ selectedNote, onNoteSaved, onNewNote }) {
     if (selectedNote) {
       setTitle(selectedNote.title || '')
       setContent(selectedNote.content || '')
-      setIsPublic(selectedNote.is_public || false)
+      setIsPublic(selectedNote.is_public !== false)
     } else {
       setTitle('')
       setContent('')
-      setIsPublic(false)
+      setIsPublic(true)
     }
   }, [selectedNote])
 
@@ -92,7 +92,7 @@ export default function NoteEditor({ selectedNote, onNoteSaved, onNewNote }) {
   const handleNewNote = () => {
     setTitle('')
     setContent('')
-    setIsPublic(false)
+    setIsPublic(true)
     onNewNote()
   }
 
