@@ -6,13 +6,13 @@ import NotesList from '../components/NotesList'
 import NoteEditor from '../components/NoteEditor'
 
 export default function Home() {
-  const [selectedNote, setSelectedNote] = useState(null)
+  const [selectedNote, setSelectedNote] = useState<any>(null)
 
-  const handleSelectNote = (note) => {
+  const handleSelectNote = (note: any) => {
     setSelectedNote(note)
   }
 
-  const handleNoteSaved = (note) => {
+  const handleNoteSaved = (note: any) => {
     // This will trigger a re-fetch in NotesList
     setSelectedNote(note)
   }
