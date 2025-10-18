@@ -35,6 +35,32 @@ export default function NotesList({ onSelectNote, selectedNoteId }) {
     return () => subscription.unsubscribe()
   }, [])
 
+  // Set up real-time subscription for notes changes
+  useEffect(() => {
+    if (!user) return
+
+    const channel = supabase
+      .channel('notes-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'notes',
+          filter: `user_id=eq.${user.id}`,
+        },
+        () => {
+          // Refetch notes when any change occurs
+          fetchNotes(user.id)
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [user])
+
   const fetchNotes = async (userId) => {
     try {
       setLoading(true)
